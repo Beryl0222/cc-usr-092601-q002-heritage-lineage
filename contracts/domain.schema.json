@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "非遗制式与衍生谱系库领域事件",
+  "type": "object",
+  "required": [
+    "event_id",
+    "event_type",
+    "aggregate_type",
+    "aggregate_id",
+    "occurred_at",
+    "version",
+    "payload"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "STANDARD_RECORDED",
+        "GRANT_ISSUED",
+        "BATCH_CREATED",
+        "STATEMENT_APPROVED",
+        "GRANT_WITHDRAWN"
+      ]
+    },
+    "aggregate_type": {
+      "type": "string",
+      "enum": [
+        "craft_standard",
+        "work_batch",
+        "lineage_grant",
+        "public_statement"
+      ]
+    },
+    "aggregate_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "occurred_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "payload": {
+      "type": "object"
+    }
+  },
+  "payload_required_by_event": {
+    "GRANT_ISSUED": [
+      "grantor_id",
+      "valid_until"
+    ],
+    "BATCH_CREATED": [
+      "quantity",
+      "standard_version"
+    ],
+    "GRANT_WITHDRAWN": [
+      "effective_at",
+      "reason"
+    ]
+  },
+  "additionalProperties": false
+}
