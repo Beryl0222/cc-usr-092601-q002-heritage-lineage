@@ -20,19 +20,37 @@
       "type": "string",
       "enum": [
         "STANDARD_RECORDED",
+        "STANDARD_SIGNED",
+        "DESIGN_COMPOSED",
+        "CONTRIBUTION_RECORDED",
         "GRANT_ISSUED",
+        "GRANT_NARROWED",
+        "GRANT_WITHDRAWN",
+        "GRANT_EXPIRED",
         "BATCH_CREATED",
+        "BATCH_SPLIT",
+        "BATCH_MERGED",
+        "BATCH_REWORKED",
+        "WORK_REGISTERED",
+        "WORK_SOLD",
+        "WORK_REVIEW_LOCKED",
         "STATEMENT_APPROVED",
-        "GRANT_WITHDRAWN"
+        "STATEMENT_FLAGGED",
+        "STATEMENT_CORRECTED",
+        "COURSE_REFERENCED",
+        "COURSE_FINISHED"
       ]
     },
     "aggregate_type": {
       "type": "string",
       "enum": [
         "craft_standard",
-        "work_batch",
+        "derived_design",
         "lineage_grant",
-        "public_statement"
+        "work_batch",
+        "work_item",
+        "public_statement",
+        "course"
       ]
     },
     "aggregate_id": {
@@ -52,17 +70,78 @@
     }
   },
   "payload_required_by_event": {
+    "STANDARD_SIGNED": [
+      "reviewer_id",
+      "reviewer_kind"
+    ],
+    "DESIGN_COMPOSED": [
+      "designer_id",
+      "standard_id",
+      "element_refs",
+      "license_snapshot"
+    ],
+    "CONTRIBUTION_RECORDED": [
+      "contributor_id",
+      "role",
+      "subject_id"
+    ],
     "GRANT_ISSUED": [
       "grantor_id",
       "valid_until"
+    ],
+    "GRANT_NARROWED": [
+      "effective_at",
+      "remaining_scope",
+      "reason"
+    ],
+    "GRANT_WITHDRAWN": [
+      "effective_at",
+      "reason"
+    ],
+    "GRANT_EXPIRED": [
+      "expired_at"
     ],
     "BATCH_CREATED": [
       "quantity",
       "standard_version"
     ],
-    "GRANT_WITHDRAWN": [
-      "effective_at",
+    "BATCH_SPLIT": [
+      "into"
+    ],
+    "BATCH_MERGED": [
+      "from",
+      "quantity"
+    ],
+    "BATCH_REWORKED": [
+      "from",
+      "quantity",
+      "process_version"
+    ],
+    "WORK_REGISTERED": [
+      "work_id",
+      "batch_id",
+      "fingerprint",
+      "contributor_ids"
+    ],
+    "WORK_REVIEW_LOCKED": [
+      "work_id",
       "reason"
+    ],
+    "STATEMENT_APPROVED": [
+      "channel",
+      "subject_id",
+      "text"
+    ],
+    "STATEMENT_FLAGGED": [
+      "reason"
+    ],
+    "STATEMENT_CORRECTED": [
+      "text"
+    ],
+    "COURSE_REFERENCED": [
+      "org_id",
+      "design_ids",
+      "scheduled_at"
     ]
   },
   "additionalProperties": false
