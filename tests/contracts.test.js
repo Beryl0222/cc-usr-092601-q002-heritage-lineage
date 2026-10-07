@@ -25,3 +25,14 @@ test("未知事件类型被拒绝", () => {
   const issues = validateEvent({ ...sample, event_type: "UNKNOWN" }, schema);
   assert.ok(issues.some((x) => x.field === "event_type" && x.code === "unsupported_value"));
 });
+test("事件与聚合归属必须匹配", () => {
+  const issues = validateEvent({ ...sample, aggregate_type: "work_batch" }, schema);
+  assert.ok(issues.some((x) => x.field === "aggregate_type" && x.code === "aggregate_event_mismatch"));
+});
+test("STANDARD_RECORDED 载荷必填", () => {
+  const issues = validateEvent({ ...sample, payload: {} }, schema);
+  assert.deepEqual(
+    issues.map((x) => x.field).sort(),
+    ["payload.element_ids", "payload.name", "payload.process_version_ids", "payload.tradition", "payload.version"],
+  );
+});

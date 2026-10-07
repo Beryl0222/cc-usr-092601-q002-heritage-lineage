@@ -20,19 +20,46 @@
       "type": "string",
       "enum": [
         "STANDARD_RECORDED",
+        "STANDARD_SIGNED",
+        "ELEMENT_REGISTERED",
+        "PROCESS_VERSION_RECORDED",
+        "MOLD_RECORDED",
         "GRANT_ISSUED",
+        "GRANT_WITHDRAWN",
+        "DESIGN_FROZEN",
+        "DESIGN_APPROVED",
         "BATCH_CREATED",
+        "BATCH_SPLIT",
+        "BATCH_MERGED",
+        "BATCH_REWORKED",
+        "ITEM_REGISTERED",
+        "ITEM_REVIEW_LOCKED",
+        "ITEM_SOLD",
         "STATEMENT_APPROVED",
-        "GRANT_WITHDRAWN"
+        "COURSE_CITED",
+        "COURSE_ENDED",
+        "DISPOSITION_OPENED",
+        "DISPOSITION_RESOLVED",
+        "RUN_STARTED",
+        "RUN_ADVANCED",
+        "RUN_FINISHED"
       ]
     },
     "aggregate_type": {
       "type": "string",
       "enum": [
         "craft_standard",
-        "work_batch",
+        "classic_element",
+        "process_version",
+        "mold_source",
         "lineage_grant",
-        "public_statement"
+        "design",
+        "work_batch",
+        "work_item",
+        "course",
+        "public_statement",
+        "disposition",
+        "discovery_run"
       ]
     },
     "aggregate_id": {
@@ -51,18 +78,146 @@
       "type": "object"
     }
   },
+  "aggregate_for_event": {
+    "STANDARD_RECORDED": "craft_standard",
+    "STANDARD_SIGNED": "craft_standard",
+    "ELEMENT_REGISTERED": "classic_element",
+    "PROCESS_VERSION_RECORDED": "process_version",
+    "MOLD_RECORDED": "mold_source",
+    "GRANT_ISSUED": "lineage_grant",
+    "GRANT_WITHDRAWN": "lineage_grant",
+    "DESIGN_FROZEN": "design",
+    "DESIGN_APPROVED": "design",
+    "BATCH_CREATED": "work_batch",
+    "BATCH_SPLIT": "work_batch",
+    "BATCH_MERGED": "work_batch",
+    "BATCH_REWORKED": "work_batch",
+    "ITEM_REGISTERED": "work_item",
+    "ITEM_REVIEW_LOCKED": "work_item",
+    "ITEM_SOLD": "work_item",
+    "STATEMENT_APPROVED": "public_statement",
+    "COURSE_CITED": "course",
+    "COURSE_ENDED": "course",
+    "DISPOSITION_OPENED": "disposition",
+    "DISPOSITION_RESOLVED": "disposition",
+    "RUN_STARTED": "discovery_run",
+    "RUN_ADVANCED": "discovery_run",
+    "RUN_FINISHED": "discovery_run"
+  },
   "payload_required_by_event": {
+    "STANDARD_RECORDED": [
+      "name",
+      "tradition",
+      "version",
+      "element_ids",
+      "process_version_ids"
+    ],
+    "STANDARD_SIGNED": [
+      "standard_version",
+      "reviewer_id",
+      "reviewer_kind"
+    ],
+    "ELEMENT_REGISTERED": [
+      "name",
+      "canonical_spec"
+    ],
+    "PROCESS_VERSION_RECORDED": [
+      "standard_id",
+      "version",
+      "steps"
+    ],
+    "MOLD_RECORDED": [
+      "origin",
+      "acquired_at"
+    ],
     "GRANT_ISSUED": [
       "grantor_id",
+      "grantee_id",
+      "scope",
+      "valid_from",
       "valid_until"
-    ],
-    "BATCH_CREATED": [
-      "quantity",
-      "standard_version"
     ],
     "GRANT_WITHDRAWN": [
       "effective_at",
+      "reason",
+      "replaces_scope"
+    ],
+    "DESIGN_FROZEN": [
+      "designer_id",
+      "element_refs",
+      "process_refs",
+      "mold_refs",
+      "grant_snapshot",
+      "content_fingerprint"
+    ],
+    "DESIGN_APPROVED": [
+      "approvals"
+    ],
+    "BATCH_CREATED": [
+      "quantity",
+      "basis"
+    ],
+    "BATCH_SPLIT": [
+      "source_batch_id",
+      "splits"
+    ],
+    "BATCH_MERGED": [
+      "source_batch_ids",
+      "quantity"
+    ],
+    "BATCH_REWORKED": [
+      "source_batch_id",
+      "quantity",
       "reason"
+    ],
+    "ITEM_REGISTERED": [
+      "batch_id",
+      "item_no",
+      "content_fingerprint",
+      "contributor_ids",
+      "basis"
+    ],
+    "ITEM_REVIEW_LOCKED": [
+      "reason"
+    ],
+    "ITEM_SOLD": [
+      "sold_at"
+    ],
+    "STATEMENT_APPROVED": [
+      "subject_ref",
+      "audience",
+      "context",
+      "basis",
+      "title",
+      "claim"
+    ],
+    "COURSE_CITED": [
+      "course_name",
+      "provider_id",
+      "citations"
+    ],
+    "COURSE_ENDED": [
+      "ended_at"
+    ],
+    "DISPOSITION_OPENED": [
+      "trigger",
+      "grant_id",
+      "scope_after",
+      "affected"
+    ],
+    "DISPOSITION_RESOLVED": [
+      "resolution",
+      "resolved_at"
+    ],
+    "RUN_STARTED": [
+      "plan"
+    ],
+    "RUN_ADVANCED": [
+      "step",
+      "disposition_ids"
+    ],
+    "RUN_FINISHED": [
+      "summary"
     ]
   },
   "additionalProperties": false

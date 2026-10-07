@@ -2,8 +2,14 @@
   "event_id": "092601-002-sample-001",
   "event_type": "STANDARD_RECORDED",
   "aggregate_type": "craft_standard",
-  "aggregate_id": "heritage_lineage-001",
+  "aggregate_id": "standard-tuye-v1",
   "occurred_at": "2026-09-25T10:00:00+08:00",
   "version": 1,
-  "payload": {}
+  "payload": {
+    "name": "北京兔儿爷传统制式",
+    "tradition": "北京中秋节令泥塑",
+    "version": 1,
+    "element_ids": ["elem-tuye-mount", "elem-tuye-armor"],
+    "process_version_ids": ["proc-tuye-v1"]
+  }
 }

@@ -27,6 +27,18 @@ export function validateEvent(payload, schema) {
       issues.push({ field, code: "unsupported_value", message: "字段值未在契约中登记" });
     }
   }
+  if (
+    typeof payload.event_type === "string"
+    && typeof payload.aggregate_type === "string"
+    && schema.aggregate_for_event?.[payload.event_type]
+    && schema.aggregate_for_event[payload.event_type] !== payload.aggregate_type
+  ) {
+    issues.push({
+      field: "aggregate_type",
+      code: "aggregate_event_mismatch",
+      message: `事件 ${payload.event_type} 必须归属于聚合 ${schema.aggregate_for_event[payload.event_type]}`,
+    });
+  }
   const body = payload.payload;
   if ("payload" in payload && (body === null || typeof body !== "object" || Array.isArray(body))) {
     issues.push({ field: "payload", code: "object_required", message: "事件载荷必须是 JSON 对象" });
